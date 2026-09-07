@@ -1,0 +1,265 @@
+<!-- templates/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Plant Disease Detection</title>
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+>
+
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+>
+
+</head>
+
+
+<body>
+
+<div class="carousel-item active">
+
+    <div class="hero-overlay"></div>
+
+    <div class="carousel-text-wrapper">
+
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                🌿 PLANT DISEASE PREDICTION USING CNN
+            </span>
+
+            <h1 class="carousel-text-title">
+
+                Protect Your Plants.<br>
+
+                <span>
+                    Grow Healthier Crops.
+                </span>
+
+            </h1>
+
+            <p class="hero-description">
+
+                Detect plant diseases quickly with artificial
+                intelligence.
+
+                Upload a clear image of a plant leaf and get an
+                instant health analysis.
+
+            </p>
+
+        </div>
+
+
+        <div class="form-box">
+
+            <div class="upload-icon">
+                🌱
+            </div>
+
+            <h2>
+                Plant Disease Detection
+            </h2>
+
+            <p class="upload-subtitle">
+                Upload a photo of a plant leaf to begin analysis
+            </p>
+
+
+            <form
+                action="/upload/"
+                method="POST"
+                enctype="multipart/form-data"
+                id="uploadForm"
+            >
+
+
+                <label
+                    class="upload-area"
+                    for="imageInput"
+                >
+
+                    <div class="upload-symbol">
+                        📷
+                    </div>
+
+                    <strong>
+                        Upload Leaf Image
+                    </strong>
+
+                    <span>
+                        Choose a clear PNG or JPG image
+                    </span>
+
+                    <input
+                        type="file"
+                        name="img"
+                        id="imageInput"
+                        accept="image/png,image/jpeg"
+                        required
+                    >
+
+                </label>
+
+
+                <div
+                    id="previewContainer"
+                    class="image-preview"
+                >
+
+                    <img
+                        id="previewImage"
+                        class="preview-image"
+                        src=""
+                        alt="Selected plant image"
+                    >
+
+                    <div class="preview-details">
+
+                        <strong
+                            id="previewName"
+                            class="preview-name"
+                        ></strong>
+
+                        <span
+                            id="previewSize"
+                            class="preview-size"
+                        ></span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="removeImage"
+                        class="remove-image"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="detect-btn"
+                    id="detectButton"
+                >
+
+                    <span>
+                        Analyze Plant
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            {% if result %}
+
+            <div class="prediction-result">
+
+                <h3>
+                    🌿 Prediction Result
+                </h3>
+
+                {% if imagepath %}
+
+                <img
+                    src="{{ imagepath }}"
+                    alt="Uploaded plant leaf"
+                    class="result-image"
+                >
+
+                {% endif %}
+
+                <div class="result-info">
+
+                    <div class="result-row">
+
+                        <span>
+                            Detected Disease
+                        </span>
+
+                        <strong>
+                            {{ prediction }}
+                        </strong>
+
+                    </div>
+
+                    <div class="result-row">
+
+                        <span>
+                            Confidence
+                        </span>
+
+                        <strong>
+                            {{ confidence }}%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <a
+                    href="/"
+                    class="new-analysis-btn"
+                >
+                    Analyze Another Image
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if error %}
+
+            <div class="prediction-error">
+
+                <h3>
+                    ⚠️ Prediction Error
+                </h3>
+
+                <p>
+                    {{ error }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="upload-note">
+
+                🔒 Your image is used only for disease detection
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
